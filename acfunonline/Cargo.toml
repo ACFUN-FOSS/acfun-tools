@@ -1,0 +1,26 @@
+[package]
+name = "acfunonline"
+version = "0.1.0"
+authors = ["orzogc"]
+edition = "2018"
+description = "a tool for AcFun user keeping online in AcFun lives which are in their medal list"
+license = "AGPL-3.0"
+repository = "https://github.com/ACFUN-FOSS/acfun-tools"
+readme = "README.md"
+categories = ["command-line-utilities"]
+keywords = ["acfun", "live"]
+
+[features]
+default = ["cli"]
+gui = ["iced"]
+cli = ["casual", "clap", "rpassword"]
+
+[dependencies]
+acfunliveapi = { git = "https://github.com/orzogc/acfunliveapi", branch = "main" }
+acfunlivedanmaku = { git = "https://github.com/orzogc/acfunliveapi", branch = "main" }
+anyhow = "1.0.41"
+casual = { version = "0.2.0", optional = true }
+clap = { version = "2.33.3", features = ["wrap_help"], optional = true }
+iced = { version = "0.3.0", default-features = false, features = ["glow", "tokio"], optional = true }
+rpassword = { version = "5.0.1", optional = true }
+tokio = { version = "1.7.1", features = ["rt-multi-thread", "macros", "sync", "time"] }
