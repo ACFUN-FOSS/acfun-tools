@@ -22,7 +22,6 @@ cargo build --release --no-default-features --features gui
 ### 命令行版本
 ```
 acfunonline -a AcFun帐号手机号或邮箱 -p AcFun帐号密码
-
 ```
 
 或者直接运行acfunonline，按照提示输入AcFun帐号手机号或邮箱和密码登陆
