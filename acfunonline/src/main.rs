@@ -3,6 +3,10 @@
     all(not(debug_assertions), target_os = "windows", feature = "gui"),
     windows_subsystem = "windows"
 )]
+#[cfg(not(any(feature = "cli", feature = "gui")))]
+compile_error!("either feature \"cli\" or \"gui\" must be enabled for this crate");
+#[cfg(all(feature = "cli", feature = "gui"))]
+compile_error!("feature \"cli\" and \"gui\" can't be enabled at the same time for this crate");
 
 mod live;
 
