@@ -25,6 +25,10 @@ use iced::{window, Application, Settings};
 
 #[cfg(feature = "gui")]
 fn main() -> Result<()> {
+    env_logger::builder()
+        .filter(Some("acfunonline"), log::LevelFilter::Info)
+        .init();
+
     Online::run(Settings {
         window: window::Settings {
             size: (400, 300),
@@ -39,5 +43,9 @@ fn main() -> Result<()> {
 #[cfg(feature = "cli")]
 #[tokio::main]
 async fn main() -> Result<()> {
+    env_logger::builder()
+        .filter(Some("acfunonline"), log::LevelFilter::Info)
+        .init();
+
     cli::cli().await
 }

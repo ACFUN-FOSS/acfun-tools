@@ -18,12 +18,14 @@ cli = ["casual", "clap", "rpassword"]
 [dependencies]
 acfunliveapi = { git = "https://github.com/orzogc/acfunliveapi", branch = "main" }
 acfunlivedanmaku = { git = "https://github.com/orzogc/acfunliveapi", branch = "main" }
-anyhow = "1.0.41"
+anyhow = "1.0.42"
 casual = { version = "0.2.0", optional = true }
 clap = { version = "2.33.3", features = ["wrap_help"], optional = true }
+env_logger = "0.8.4"
 iced = { version = "0.3.0", default-features = false, features = ["glow", "tokio"], optional = true }
+log = "0.4.14"
 rpassword = { version = "5.0.1", optional = true }
-tokio = { version = "1.8.0", features = ["rt-multi-thread", "macros", "sync", "time"] }
+tokio = { version = "1.8.1", features = ["rt-multi-thread", "macros", "sync", "time"] }
 
 [target.'cfg(not(target_arch = "x86_64"))'.dependencies]
 reqwest = { version = "0.11.4", features = ["native-tls-vendored"] }

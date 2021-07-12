@@ -7,6 +7,8 @@ use anyhow::{anyhow, bail, Result};
 use std::{collections::HashMap, time::Duration};
 use tokio::{sync::mpsc, time::sleep};
 
+const ERROR_NUM: usize = 10;
+
 /// 主播数据
 #[derive(Clone, Debug)]
 struct Liver {
@@ -53,7 +55,7 @@ pub async fn keep_online(account: String, password: String) -> Result<()> {
                 }
                 Err(e) => {
                     num += 1;
-                    if num >= 5 {
+                    if num >= ERROR_NUM {
                         bail!("live list error: {}", e);
                     }
                 }
@@ -86,7 +88,7 @@ pub async fn keep_online(account: String, password: String) -> Result<()> {
                 }
                 Err(e) => {
                     num += 1;
-                    if num >= 5 {
+                    if num >= ERROR_NUM {
                         bail!("medal list error: {}", e);
                     }
                 }
@@ -112,24 +114,14 @@ pub async fn keep_online(account: String, password: String) -> Result<()> {
                             {
                                 let tx = tx.clone();
 
-                                #[cfg(not(all(
-                                    not(debug_assertions),
-                                    target_os = "windows",
-                                    feature = "gui"
-                                )))]
-                                println!("online: {}", liver.nickname);
+                                log::info!("online: {}", liver.nickname);
 
                                 let _ = online.insert(liver.uid, liver.clone());
                                 let _ = tokio::spawn(async move {
                                     let _ = client.danmaku().await;
                                     let _ = tx.send(Command::Delete(liver.uid)).await;
 
-                                    #[cfg(not(all(
-                                        not(debug_assertions),
-                                        target_os = "windows",
-                                        feature = "gui"
-                                    )))]
-                                    println!("stop: {}", liver.nickname);
+                                    log::info!("stop: {}", liver.nickname);
                                 });
                             }
                         }
