@@ -21,7 +21,7 @@ struct Liver {
     nickname: String,
 }
 
-/// 主播们
+/// 主播们的数据
 type Livers = HashMap<i64, Liver>;
 
 /// 命令
@@ -153,7 +153,11 @@ async fn danmaku(
         }
     }
     if let Err(e) = client.close().await {
-        log::error!("failed to close client WebSocket connection: {}", e);
+        log::error!(
+            "[{}] failed to close client WebSocket connection: {}",
+            liver.uid,
+            e
+        );
     }
     if tx.send(Command::Delete(liver.uid)).await.is_err() {
         log::info!("[{}] failed to send Delete", liver.uid);
